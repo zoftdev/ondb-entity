@@ -1,35 +1,42 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change target license header, choose License Headers in Project Properties.
+ * To change target template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.hlex.ondb.entity;
 
 import com.hlex.ondb.exception.NullKeyException;
 import com.google.gson.Gson;
-import com.hlex.ondb.anno.MajorKey;
-import com.hlex.ondb.anno.MinorKey;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Id;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 /**
- *
- * @author thisadee
+ * find @Id to make majorkey 
+ * find @EmbededId to make minorkey
+ * 
+ * @author targetadee
  */
-public abstract class AnnotateKeyEntity implements ONDBEntity {
+public   class AnnoEntityHelper<T> implements ONDBEntityHelperInf {
 
+    public T target;
+    
+    public AnnoEntityHelper(T o){
+        target =o;
+    }
     
     public String getStringValue() {
-        return (new Gson()).toJson(this);
+        return (new Gson()).toJson(target);
     }
 
     @Override
-    public byte[] getValue() {
+    public byte[] getByteValue() {
         return getStringValue().getBytes();
     }
     
@@ -41,7 +48,7 @@ public abstract class AnnotateKeyEntity implements ONDBEntity {
      */
     @Override
     public List<String> getMinorKey() throws NullKeyException {
-        return getKeyByAnnotation(MinorKey.class);
+        return getKeyByAnnotation(EmbeddedId.class);
     }
 
     /**
@@ -51,7 +58,7 @@ public abstract class AnnotateKeyEntity implements ONDBEntity {
      */
     @Override
     public List<String> getMajorKey() throws NullKeyException {
-        return getKeyByAnnotation(MajorKey.class);
+        return getKeyByAnnotation(Id.class);
         
     }
     
@@ -72,13 +79,13 @@ public abstract class AnnotateKeyEntity implements ONDBEntity {
         List<String> key = new ArrayList();
 
         //field all field for @MajorKey
-        Field[] fs = FieldUtils.getAllFields(this.getClass());
+        Field[] fs = FieldUtils.getAllFields(target.getClass());
         for (Field f : fs) {
             Annotation mjk = f.getAnnotation(type);
             Object value = null;
             if (mjk != null) {
                 try {
-                    value = FieldUtils.readField(this, f.getName(), true);
+                    value = FieldUtils.readField(target, f.getName(), true);
                     //null value case
                     if (value == null) {
                         throw new NullKeyException(f.getName() + " has null value");
@@ -90,7 +97,7 @@ public abstract class AnnotateKeyEntity implements ONDBEntity {
                     
                     
                 } catch (IllegalAccessException ex) {
-                    Logger.getLogger(AnnotateKeyEntity.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AnnoEntityHelper.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -103,5 +110,7 @@ public abstract class AnnotateKeyEntity implements ONDBEntity {
 
         return key;
     }
+
+    
 
 }

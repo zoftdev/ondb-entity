@@ -12,9 +12,9 @@ import java.util.List;
  *
  * @author thisadee
  */
-interface ONDBEntity {
+interface ONDBEntityHelperInf {
     public List<String> getMajorKey() throws NullKeyException;
     public List<String> getMinorKey() throws NullKeyException;
-    public byte[] getValue();
+    public byte[] getByteValue();
 //    public String parseValue();
 }

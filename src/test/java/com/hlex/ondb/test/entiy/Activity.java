@@ -6,24 +6,27 @@
 package com.hlex.ondb.test.entiy;
 
 
-import com.hlex.ondb.anno.MajorKey;
-import com.hlex.ondb.anno.MinorKey;
-import com.hlex.ondb.entity.AnnotateKeyEntity;
-import java.io.Serializable;
+import com.hlex.ondb.entity.AnnoEntityHelper;
 import java.util.Date;
+import javax.persistence.EmbeddedId;
+
+
+import javax.persistence.Id;
 
 /**
  *
  * @author thisadee
  */
-public class Activity  extends AnnotateKeyEntity{
+public class Activity {
     
-    @MajorKey
+    @Id
     public String project;
-    @MajorKey
+    @Id
     private String tranId;
-    @MinorKey
+        
+    @EmbeddedId
     private String acitvityId;
+    
     
     private String jsonId;
     private String nodeType;
@@ -163,6 +166,12 @@ public class Activity  extends AnnotateKeyEntity{
     public void setCreate_msec(long create_msec) {
         this.create_msec = create_msec;
     }
+
+    @Override
+    public String toString() {
+        return "Activity{" + "project=" + project + ", tranId=" + tranId + ", acitvityId=" + acitvityId + ", jsonId=" + jsonId + ", nodeType=" + nodeType + ", nodeName=" + nodeName + ", code=" + code + ", namespace=" + namespace + ", description=" + description + ", request=" + request + ", response=" + response + ", process_msec=" + process_msec + ", create_dt=" + create_dt + ", create_msec=" + create_msec + '}';
+    }
+    
     
     
 }
