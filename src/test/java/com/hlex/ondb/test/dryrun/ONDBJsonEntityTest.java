@@ -6,11 +6,11 @@
 package com.hlex.ondb.test.dryrun;
 
 import com.hlex.ondb.entity.AnnoEntityHelper;
-import com.hlex.ondb.test.entiy.Activity;
+import com.hlex.ondb.test.entity.Activity;
 import java.util.Date;
 import java.util.List;
 import org.junit.Test;
-
+import static org.junit.Assert.*;
 /**
  *
  * @author thisadee
@@ -25,7 +25,7 @@ public class ONDBJsonEntityTest {
     }
     
     Activity a=new Activity("engine2_3g", "mytid","myactid");     
-    AnnoEntityHelper helper=new AnnoEntityHelper(a);
+    AnnoEntityHelper helper=new AnnoEntityHelper();
     
     /**
      * Test of getValue method, of class ONDBJsonEntity.
@@ -33,7 +33,7 @@ public class ONDBJsonEntityTest {
     @Test
     public void testGetValue() {
         
-        String data=helper.getStringValue();
+        String data=helper.getStringValue(a);
         System.out.println("data = " + data);
     }
 
@@ -51,9 +51,9 @@ public class ONDBJsonEntityTest {
     @Test
     public void testGetMajorKey() throws Exception {
         
-        List<String> l = helper.getMajorKey();
+        List<String> l = helper.getMajorKey(a);
         System.out.println("l = " + l);
-        List<String> minor = helper.getMinorKey();
+        List<String> minor = helper.getMinorKey(a);
         System.out.println("minor = " + minor);
 //        assertEquals(new ArrayList()., a);
         

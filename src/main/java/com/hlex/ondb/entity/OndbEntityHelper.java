@@ -14,23 +14,21 @@ import oracle.kv.Value;
  *
  * @author thisadee
  */
-public class OndbEntityHelper<T> extends AnnoEntityHelper{
+public class OndbEntityHelper  extends AnnoEntityHelper{
 
-    public OndbEntityHelper(T o) {
-        super(o);
+    
+    
+    public Value getValue(Object target){
+        return Value.createValue(getByteValue(target));
     }
     
-    public Value getValue(){
-        return Value.createValue(getByteValue());
-    }
-    
-    public Key getKey() throws NullKeyException{
-        return Key.createKey(getMajorKey(), getMinorKey());
+    public Key getKey(Object target) throws NullKeyException{
+        return Key.createKey(getMajorKey(target), getMinorKey(target));
     }
     
     
-    public static <X> X parseData(Class<? extends X> c,byte[] byteValue) {
-        X ret=(X)new Gson().fromJson (new String(byteValue), c);
-        return ret;
+    public <X extends Object> X parseData(Class<X> c,byte[] byteValue) {
+        return new Gson().fromJson (new String(byteValue), c);
+//        return ret;
     }
 }

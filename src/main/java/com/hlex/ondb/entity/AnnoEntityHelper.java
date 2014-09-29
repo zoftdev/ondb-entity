@@ -23,21 +23,17 @@ import org.apache.commons.lang3.reflect.FieldUtils;
  * 
  * @author targetadee
  */
-public   class AnnoEntityHelper<T> implements ONDBEntityHelperInf {
+public   class AnnoEntityHelper implements ONDBEntityHelperInf {
 
-    public T target;
-    
-    public AnnoEntityHelper(T o){
-        target =o;
-    }
-    
-    public String getStringValue() {
+     
+     
+    public String getStringValue(Object target) {
         return (new Gson()).toJson(target);
     }
 
     @Override
-    public byte[] getByteValue() {
-        return getStringValue().getBytes();
+    public byte[] getByteValue(Object target) {
+        return getStringValue(  target).getBytes();
     }
     
     
@@ -47,8 +43,8 @@ public   class AnnoEntityHelper<T> implements ONDBEntityHelperInf {
      * @throws NullKeyException 
      */
     @Override
-    public List<String> getMinorKey() throws NullKeyException {
-        return getKeyByAnnotation(EmbeddedId.class);
+    public    List<String> getMinorKey(Object o) throws NullKeyException {
+        return getKeyByAnnotation(o,EmbeddedId.class);
     }
 
     /**
@@ -57,8 +53,8 @@ public   class AnnoEntityHelper<T> implements ONDBEntityHelperInf {
      * @throws NullKeyException 
      */
     @Override
-    public List<String> getMajorKey() throws NullKeyException {
-        return getKeyByAnnotation(Id.class);
+    public   List<String> getMajorKey(Object o) throws NullKeyException {
+        return getKeyByAnnotation(o,Id.class);
         
     }
     
@@ -73,19 +69,19 @@ public   class AnnoEntityHelper<T> implements ONDBEntityHelperInf {
      * @return
      * @throws com.hlex.ondb.exception.NullKeyException
      */        
-    public List<String> getKeyByAnnotation(Class<? extends Annotation> type) throws NullKeyException {
+    public   List<String> getKeyByAnnotation(Object o,Class<? extends Annotation> type) throws NullKeyException {
     
         //returned variable
         List<String> key = new ArrayList();
 
         //field all field for @MajorKey
-        Field[] fs = FieldUtils.getAllFields(target.getClass());
+        Field[] fs = FieldUtils.getAllFields(o.getClass());
         for (Field f : fs) {
             Annotation mjk = f.getAnnotation(type);
             Object value = null;
             if (mjk != null) {
                 try {
-                    value = FieldUtils.readField(target, f.getName(), true);
+                    value = FieldUtils.readField(o, f.getName(), true);
                     //null value case
                     if (value == null) {
                         throw new NullKeyException(f.getName() + " has null value");
