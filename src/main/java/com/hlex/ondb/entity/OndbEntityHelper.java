@@ -27,7 +27,7 @@ public class OndbEntityHelper  extends AnnoEntityHelper{
     }
     
     
-    public <X extends Object> X parseData(Class<X> c,byte[] byteValue) {
+    public <T> T parseData(Class<T> c,byte[] byteValue) {
         return new Gson().fromJson (new String(byteValue), c);
 //        return ret;
     }

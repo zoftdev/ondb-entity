@@ -8,27 +8,18 @@ package com.hlex.ondb.test.online;
 import com.hlex.ondb.entity.OndbEntityHelper;
 import com.hlex.ondb.exception.NullKeyException;
 import com.hlex.ondb.test.entity.Activity;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-import oracle.kv.Direction;
 import oracle.kv.KVStore;
 import oracle.kv.KVStoreConfig;
 import oracle.kv.KVStoreFactory;
-import oracle.kv.Key;
-import oracle.kv.KeyValueVersion;
-import oracle.kv.Operation;
-import oracle.kv.OperationExecutionException;
-import oracle.kv.Value;
-import oracle.kv.ValueVersion;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Ignore;
 
 /**
  *
  * @author thisadee
  */
+@Ignore
 public class AnotherTest {
     
     Activity a=new Activity("engine2_3g", "mytid","myactid");

@@ -9,7 +9,7 @@ package com.hlex.ondb.exception;
  *
  * @author thisadee
  */
-public class NullKeyException extends Exception {
+public class NullKeyException extends RuntimeException {
 
     public NullKeyException() {
     }

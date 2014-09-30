@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.hlex.ondb.test.entity;
 
-
-import com.hlex.ondb.entity.AnnoEntityHelper;
 import java.util.Date;
 import javax.persistence.EmbeddedId;
 

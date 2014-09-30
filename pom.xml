@@ -63,4 +63,15 @@
             </plugins> 
         </pluginManagement> 
     </build>
+    
+     <distributionManagement>
+        <snapshotRepository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>snapshots</id>
+            <name>snapshots</name>
+            <url>http://172.20.160.92:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+
+    </distributionManagement>
+    
 </project>
